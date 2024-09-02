@@ -25,7 +25,7 @@ public struct LineView: View {
     @State private var opacity:Double = 0
     @State private var currentDataNumber: Double = 0
     @State private var hideHorizontalLines: Bool = false
-    var onNumberChange: ((Double) -> Void)?
+    var onIndexChange: ((Int) -> Void)?
     
     public init(data: [Double],
                 title: String? = nil,
@@ -33,7 +33,7 @@ public struct LineView: View {
                 style: ChartStyle = Styles.lineChartStyleOne,
                 valueSpecifier: String? = "%.1f",
                 legendSpecifier: String? = "%.2f",
-                onNumberChange: ((Double) -> Void)? = nil) {
+                onIndexChange: ((Int) -> Void)? = nil) {
         
         self.data = ChartData(points: data)
         self.title = title
@@ -42,7 +42,7 @@ public struct LineView: View {
         self.valueSpecifier = valueSpecifier!
         self.legendSpecifier = legendSpecifier!
         self.darkModeStyle = style.darkModeStyle != nil ? style.darkModeStyle! : Styles.lineViewDarkMode
-        self.onNumberChange = onNumberChange
+        self.onIndexChange = onIndexChange
     }
     
     public var body: some View {
@@ -119,7 +119,7 @@ public struct LineView: View {
         let index:Int = Int(floor((toPoint.x-15)/stepWidth))
         if (index >= 0 && index < points.count){
             self.currentDataNumber = points[index]
-            onNumberChange?(self.currentDataNumber)
+            onIndexChange?(index)
             return CGPoint(x: CGFloat(index)*stepWidth, y: CGFloat(points[index])*stepHeight)
         }
         return .zero
