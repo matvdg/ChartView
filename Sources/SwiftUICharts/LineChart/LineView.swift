@@ -32,7 +32,8 @@ public struct LineView: View {
                 legend: String? = nil,
                 style: ChartStyle = Styles.lineChartStyleOne,
                 valueSpecifier: String? = "%.1f",
-                legendSpecifier: String? = "%.2f") {
+                legendSpecifier: String? = "%.2f",
+                onNumberChange: ((Double) -> Void)? = nil) {
         
         self.data = ChartData(points: data)
         self.title = title
@@ -41,6 +42,7 @@ public struct LineView: View {
         self.valueSpecifier = valueSpecifier!
         self.legendSpecifier = legendSpecifier!
         self.darkModeStyle = style.darkModeStyle != nil ? style.darkModeStyle! : Styles.lineViewDarkMode
+        self.onNumberChange = onNumberChange
     }
     
     public var body: some View {
