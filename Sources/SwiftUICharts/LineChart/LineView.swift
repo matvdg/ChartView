@@ -23,8 +23,9 @@ public struct LineView: View {
     @State private var indicatorLocation:CGPoint = .zero
     @State private var closestPoint: CGPoint = .zero
     @State private var opacity:Double = 0
-    @State var currentDataNumber: Double = 0
+    @State private var currentDataNumber: Double = 0
     @State private var hideHorizontalLines: Bool = false
+    var onNumberChange: ((Double) -> Void)?
     
     public init(data: [Double],
                 title: String? = nil,
@@ -116,6 +117,7 @@ public struct LineView: View {
         let index:Int = Int(floor((toPoint.x-15)/stepWidth))
         if (index >= 0 && index < points.count){
             self.currentDataNumber = points[index]
+            onNumberChange?(self.currentDataNumber)
             return CGPoint(x: CGFloat(index)*stepWidth, y: CGFloat(points[index])*stepHeight)
         }
         return .zero
